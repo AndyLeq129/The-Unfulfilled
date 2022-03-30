@@ -67,9 +67,31 @@ public class PlayerController : MonoBehaviour
         {
             if(isGround)
             {
+                myAnim.SetBool("Jump",true)
                 Vector2 jumpVel = new Vector2(0.0f, jumpSpeed);
                 myRigidbody.velocity = Vector2.up * jumpVel;
             }
+        }
+    }
+    void SwitchAnimation()
+    {
+        if (myRigidbody.velocity.y < 0.0f)
+        {
+            myAnim.SetBool("Fall", true);
+        }
+        myAnim.SetBool("Idle", false);
+        if (myAnim.GetBool("Jump"))
+        {
+            if (myRigidbody.velocity.y < 0.0f)
+            {
+                myAnim.SetBool("Jump", false);
+                myAnim.SetBool("Fall", true);
+            }
+        }
+        else if (isGround)
+        {
+            myAnim.SetBool("Fall", false);
+            myAnim.SetBool("Idle", true);
         }
     }
 }
